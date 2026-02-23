@@ -1,124 +1,28 @@
 <!-- Name: Jonty Hood-->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Light Leaks Photography</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body class="journeys-page">
-    <!-- Header format for all subsequent pages-->
-    <header>
-      <nav class="navbar">
-        <a href="index.html" class="logo"
-          ><img src="images/logo_v2.svg" alt="Logo Image"
-        /></a>
 
-        <!-- adding all of the navbar items/destinations-->
-        <ul class="navbar_menu">
-          <li class="navbar_items">
-            <a href="index.html">Home</a>
-          </li>
-          <li class="navbar_items">
-            <a href="journeys.html">Journeys</a>
-          </li>
-          <li class="navbar_items">
-            <a href="equipment.html">Equipment</a>
-          </li>
-          <li class="navbar_items">
-            <a href="about.html">About</a>
-          </li>
-          <li class="navbar_items">
-            <a href="contact.html">Contact</a>
-          </li>
-        </ul>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Light Leaks Photography</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-        <!-- Creating a button to access a drop-down menu-->
-        <div class="navbar_toggleBtn">
-          <img src="images\delicious_hamburger.png" />
-        </div>
-      </nav>
-    </header>
+<body class="journeys-page">
+  <!-- Header format for all subsequent pages-->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo"><img src="images/logo_v2.svg" alt="Logo Image" /></a>
 
-    <!-- Journeys page Content: -->
-    <section>
-      <h1 class="pg-title-text">Journeys</h1>
-      <h2 class="pg-subtitle-text">Go ahead, click one!</h2>
-
-      <ul class="journey-thumbnails">
-        <!-- Journey Selectors-->
-        <li class="journey-item" data-tilt>
-          <a href="nepal.html">
-            <div class="journey-item-box">
-              <img src="images/journey_thumbnail_images\nepal_thumbnail.JPG" />
-              <span class="journey-box-text">Nepal</span>
-            </div>
-          </a>
-        </li>
-
-        <li class="journey-item" data-tilt>
-          <a href="thailand.html">
-            <div class="journey-item-box">
-              <img
-                src="images\journey_thumbnail_images\thailand_tumbnail.jpg"
-              />
-              <span class="journey-box-text" href="thailand.html"
-                >Thailand</span
-              >
-            </div>
-          </a>
-        </li>
-
-        <li class="journey-item" data-tilt>
-          <a href="japan.html">
-            <div class="journey-item-box">
-              <img src="images\journey_thumbnail_images\japan_thumbnail.jpg" />
-              <span class="journey-box-text" href="japan.html">Japan</span>
-            </div>
-          </a>
-        </li>
-
-        <li class="journey-item" data-tilt>
-          <a href="vietnam.html">
-            <div class="journey-item-box">
-              <img
-                src="images\journey_thumbnail_images\vietnam_thumbnail.jpg"
-              />
-              <span href="vietnam.html" class="journey-box-text">Vietnam</span>
-            </div>
-          </a>
-        </li>
-
-        <li class="journey-item" data-tilt>
-          <a href="australia.html">
-            <div class="journey-item-box">
-              <img
-                src="images\journey_thumbnail_images\australia_thumbnail.jpg"
-              />
-              <span class="journey-box-text" href="australia.html"
-                >Australia</span
-              >
-            </div>
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <!-- Live Clock -->
-      <time id="live-clock"></time>
-      <ul class="footer_menu">
+      <!-- adding all of the navbar items/destinations-->
+      <ul class="navbar_menu">
         <li class="navbar_items">
           <a href="index.html">Home</a>
         </li>
         <li class="navbar_items">
           <a href="journeys.html">Journeys</a>
-        </li>
-        <li class="navbar_items">
-          <a href="equipment.html">Equipment</a>
         </li>
         <li class="navbar_items">
           <a href="about.html">About</a>
@@ -127,11 +31,48 @@
           <a href="contact.html">Contact</a>
         </li>
       </ul>
-      <p>&copy; Jonty Hood </p>
-    </footer>
 
-    <!-- vanilla-tilt JS plugin -->
-    <script type="text/javascript" src="vanilla-tilt.js"></script>
-    <script src="script.js"></script>
-  </body>
+      <!-- Creating a button to access a drop-down menu-->
+      <div class="navbar_toggleBtn">
+        <img src="images/delicious_hamburger.png" />
+      </div>
+    </nav>
+  </header>
+
+  <!-- Journeys page Content: -->
+  <section>
+    <h1 class="pg-title-text">Journeys</h1>
+    <h2 class="pg-subtitle-text">Go ahead, click one!</h2>
+
+    <ul class="journey-thumbnails" id="journey-thumbnails">
+      <!-- Thumbnails loaded dynamically from galleries.json -->
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <!-- Live Clock -->
+    <time id="live-clock"></time>
+    <ul class="footer_menu">
+      <li class="navbar_items">
+        <a href="index.html">Home</a>
+      </li>
+      <li class="navbar_items">
+        <a href="journeys.html">Journeys</a>
+      </li>
+      <li class="navbar_items">
+        <a href="about.html">About</a>
+      </li>
+      <li class="navbar_items">
+        <a href="contact.html">Contact</a>
+      </li>
+    </ul>
+    <p>&copy; Jonty Hood </p>
+  </footer>
+
+  <!-- vanilla-tilt JS plugin -->
+  <script type="text/javascript" src="vanilla-tilt.js"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>

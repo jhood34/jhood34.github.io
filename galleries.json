@@ -1,0 +1,32 @@
+[
+    {
+        "id": "nepal",
+        "title": "Nepal",
+        "year": "2019",
+        "thumbnail": "nepal_thumbnail.webp"
+    },
+    {
+        "id": "thailand",
+        "title": "Thailand",
+        "year": "2013-2022",
+        "thumbnail": "thailand_tumbnail.webp"
+    },
+    {
+        "id": "japan",
+        "title": "Japan",
+        "year": "2023",
+        "thumbnail": "japan_thumbnail.webp"
+    },
+    {
+        "id": "vietnam",
+        "title": "Vietnam",
+        "year": "2018",
+        "thumbnail": "vietnam_thumbnail.webp"
+    },
+    {
+        "id": "australia",
+        "title": "Australia",
+        "year": "2022 -",
+        "thumbnail": "australia_thumbnail.webp"
+    }
+]

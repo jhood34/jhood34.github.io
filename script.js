@@ -1,4 +1,6 @@
-// Addition of mobile hamburger-menu with JS (1)
+// ============================================================
+// 1. HAMBURGER MENU (mobile navigation)
+// ============================================================
 const menu_button = document.querySelector(".navbar_toggleBtn");
 const menu_items = document.querySelector(".navbar_menu");
 
@@ -15,7 +17,9 @@ menu_button.addEventListener("click", () => {
   document.startViewTransition(() => menu_items.classList.toggle("active"));
 });
 
-// Plugin Use of vanilla-tilt JS (2)
+// ============================================================
+// 2. VANILLA TILT (landing page parallax images)
+// ============================================================
 if (document.body.classList.contains("landing-page")) {
   const normal_image = document.querySelector("welcome-image_front");
   const shifted_images = document.querySelectorAll("welcome-image_behind");
@@ -28,16 +32,17 @@ if (document.body.classList.contains("landing-page")) {
   VanillaTilt.init(document.querySelector("welcome-image_behind"));
 }
 
-
-// Remove hover effects on mobile ()
+// ============================================================
+// 3. REMOVE HOVER EFFECTS ON MOBILE
+// ============================================================
 function hasTouch() {
   return 'ontouchstart' in document.documentElement
-         || navigator.maxTouchPoints > 0
-         || navigator.msMaxTouchPoints > 0;
+    || navigator.maxTouchPoints > 0
+    || navigator.msMaxTouchPoints > 0;
 }
 
-if (hasTouch()) { // remove all the :hover stylesheets
-  try { // prevent exception on browsers not supporting DOM styleSheets properly
+if (hasTouch()) {
+  try {
     for (var si in document.styleSheets) {
       var styleSheet = document.styleSheets[si];
       if (!styleSheet.rules) continue;
@@ -50,21 +55,20 @@ if (hasTouch()) { // remove all the :hover stylesheets
         }
       }
     }
-  } catch (ex) {}
+  } catch (ex) { }
 }
 
-// Live clock functionality (3)
-
+// ============================================================
+// 4. LIVE CLOCK
+// ============================================================
 var live_time = document.getElementById("live-clock");
 
-// Function that use built-in functions like getSeconds() to get current time
 function time() {
   var date = new Date();
   var s = date.getSeconds();
   var m = date.getMinutes();
   var h = date.getHours();
 
-  // alters the text content to display current time values
   live_time.textContent =
     ("0" + h).substr(-2) +
     ":" +
@@ -75,28 +79,23 @@ function time() {
 
 setInterval(time, 1000);
 
-// Pop-up OnClick functionality within image galleries with JS (4)
-const gallery_state = document.querySelector(".gallery");
+// ============================================================
+// 5. GALLERY POPUP (lightbox)
+// ============================================================
+function setupGalleryPopup() {
+  const gallery = document.querySelector(".gallery");
+  const popup = document.querySelector(".popup");
+  if (!gallery || !popup) return;
 
-var images = document.querySelectorAll(".gallery img");
+  const images = gallery.querySelectorAll("img");
 
-/* loop through all images */
-for (var i = 0; i < images.length; i++) {
-  var image = images[i];
-
-  /* on-click, the images' src is used to create a pop-up element */
-  image.addEventListener("click", function () {
-    var src = this.src;
-
-    var popup = document.querySelector(".popup");
-    popup.innerHTML = "<img src='" + src + "' />";
-    popup.style.display = "flex";
-    gallery_state.classList.toggle("active");
+  images.forEach(function (image) {
+    image.addEventListener("click", function () {
+      popup.innerHTML = "<img src='" + this.src + "' />";
+      popup.style.display = "flex";
+      gallery.classList.add("active");
+    });
   });
-}
-// Blurs background while image is in full-screen preview
-if (document.body.classList.contains("journey-page")) {
-  var popup = document.querySelector(".popup");
 
   ["click", "onkeydown"].forEach((evt) =>
     popup.addEventListener(
@@ -104,14 +103,135 @@ if (document.body.classList.contains("journey-page")) {
       function () {
         this.style.display = "none";
         this.innerHTML = "";
-        gallery_state.classList.toggle("active");
+        gallery.classList.remove("active");
       },
       false
     )
   );
 }
 
-// FORM VALIDATION W/JS (5)
+// Set up popup for statically-loaded galleries (if any images already exist)
+setupGalleryPopup();
+
+// ============================================================
+// 6. DYNAMIC GALLERY LOADING (gallery.html)
+// ============================================================
+async function loadGallery() {
+  const container = document.getElementById("gallery-container");
+  if (!container) return;
+
+  // Read country from URL: gallery.html?country=japan
+  const params = new URLSearchParams(window.location.search);
+  const country = params.get("country");
+
+  if (!country) {
+    container.innerHTML = "<p>No country specified.</p>";
+    return;
+  }
+
+  try {
+    // Fetch gallery metadata from master list
+    const galleriesRes = await fetch("galleries.json");
+    const galleries = await galleriesRes.json();
+    const meta = galleries.find((g) => g.id === country);
+
+    if (!meta) {
+      container.innerHTML = "<p>Country not found.</p>";
+      return;
+    }
+
+    // Set page metadata
+    document.getElementById("gallery-title").textContent = meta.title;
+    document.getElementById("gallery-year").textContent = meta.year;
+    document.title = meta.title + " — Light Leaks Photography";
+
+    // Fetch the country's image list
+    const imagesRes = await fetch(
+      "images/Journey_Images/" + country + "/gallery.json"
+    );
+    const images = await imagesRes.json();
+
+    // Build gallery images
+    const basePath = "images/Journey_Images/" + country + "/";
+    images.forEach(function (img) {
+      const el = document.createElement("img");
+      el.src = basePath + img.file;
+      el.alt = img.alt;
+      el.loading = "lazy";
+      container.appendChild(el);
+    });
+
+    // Wire up popup handlers for the new images
+    setupGalleryPopup();
+  } catch (err) {
+    console.error("Error loading gallery:", err);
+    container.innerHTML = "<p>Error loading gallery.</p>";
+  }
+}
+
+// ============================================================
+// 7. DYNAMIC JOURNEY THUMBNAILS (journeys.html)
+// ============================================================
+async function loadJourneyThumbnails() {
+  const container = document.getElementById("journey-thumbnails");
+  if (!container) return;
+
+  try {
+    const res = await fetch("galleries.json");
+    const galleries = await res.json();
+
+    galleries.forEach(function (gallery) {
+      const li = document.createElement("li");
+      li.className = "journey-item";
+      li.setAttribute("data-tilt", "");
+
+      const a = document.createElement("a");
+      a.href = "gallery.html?country=" + gallery.id;
+
+      const box = document.createElement("div");
+      box.className = "journey-item-box";
+
+      const img = document.createElement("img");
+      img.src = "images/journey_thumbnail_images/" + gallery.thumbnail;
+      img.loading = "lazy";
+
+      const span = document.createElement("span");
+      span.className = "journey-box-text";
+      span.textContent = gallery.title;
+
+      box.appendChild(img);
+      box.appendChild(span);
+      a.appendChild(box);
+      li.appendChild(a);
+      container.appendChild(li);
+    });
+
+    // Initialise vanilla-tilt on the new elements
+    if (typeof VanillaTilt !== "undefined") {
+      VanillaTilt.init(document.querySelectorAll(".journey-item[data-tilt]"), {
+        max: 15,
+        speed: 400,
+      });
+    }
+  } catch (err) {
+    console.error("Error loading journey thumbnails:", err);
+  }
+}
+
+// ============================================================
+// 8. PAGE INITIALISATION
+// ============================================================
+// Run the appropriate loader based on which page we're on
+if (document.getElementById("gallery-container")) {
+  loadGallery();
+}
+if (document.getElementById("journey-thumbnails")) {
+  loadJourneyThumbnails();
+}
+
+// ============================================================
+// 9. FORM VALIDATION (contact.html)
+// ============================================================
 function form_validator() {
   var name_checker = document.forms["contact_form"]["name"].value;
   var last_name_checker = document.forms["contact_form"]["last_name"].value;

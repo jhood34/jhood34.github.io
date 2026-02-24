@@ -94,6 +94,7 @@ function setupGalleryPopup() {
       popup.innerHTML = "<img src='" + this.src + "' />";
       popup.style.display = "flex";
       gallery.classList.add("active");
+      document.body.classList.add("popup-active");
     });
   });
 
@@ -104,6 +105,7 @@ function setupGalleryPopup() {
         this.style.display = "none";
         this.innerHTML = "";
         gallery.classList.remove("active");
+        document.body.classList.remove("popup-active");
       },
       false
     )

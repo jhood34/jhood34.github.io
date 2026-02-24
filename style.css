@@ -204,8 +204,11 @@ footer>p {
   z-index: -1;
 }
 
-.gallery.active {
-  filter: grayscale();
+body.popup-active>*:not(header):not(.popup) {
+  filter: blur(20px);
+}
+
+body.popup-active header nav>*:not(.logo) {
   filter: blur(20px);
 }
 

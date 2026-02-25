@@ -15,7 +15,7 @@ from PIL import Image
 IMAGES_DIR = Path(__file__).parent / "images"
 GALLERY_MAX_WIDTH = 2000       # Max width for gallery/full images
 THUMBNAIL_MAX_WIDTH = 600      # Max width for thumbnail images
-WEBP_QUALITY = 82              # WebP quality (0-100)
+WEBP_QUALITY = 87              # WebP quality (0-100)
 
 # Folders that contain thumbnails (use smaller max width)
 THUMBNAIL_FOLDERS = {"journey_thumbnail_images"}
